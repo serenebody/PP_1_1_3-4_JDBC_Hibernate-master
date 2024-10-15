@@ -10,9 +10,9 @@ import org.hibernate.query.Query;
 import java.util.List;
 import java.util.Queue;
 
-import static jm.task.core.jdbc.util.Util.getSessionFactory;
 
-public class UserDaoHibernateImpl implements UserDao {
+
+public class UserDaoHibernateImpl extends Util implements UserDao {
 
     @Override
     public void createUsersTable() {
