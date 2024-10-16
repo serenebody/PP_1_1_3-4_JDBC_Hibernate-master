@@ -1,6 +1,7 @@
 package jm.task.core.jdbc.util;
 
 import jm.task.core.jdbc.model.User;
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -20,6 +21,9 @@ public class Util {
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "root";
     private static SessionFactory sessionFactory;
+
+    private Util() {
+    }
 
     public static Connection getConnection() {
         Connection connection = null;
@@ -62,5 +66,15 @@ public class Util {
 
         configuration.setProperties(properties);
         return configuration;
+    }
+
+    public static void closeSessionFactory(SessionFactory sessionFactory) {
+        if (sessionFactory != null) {
+            try {
+                sessionFactory.close();
+            } catch (HibernateException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
