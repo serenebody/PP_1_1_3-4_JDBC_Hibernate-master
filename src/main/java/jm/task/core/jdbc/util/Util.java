@@ -25,21 +25,22 @@ public class Util {
         Connection connection = null;
         try {
             Class.forName(DB_DRIVER);
-            connection = DriverManager.getConnection(DB_URL,DB_USER,DB_PASSWORD);
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
         return connection;
     }
-    public static SessionFactory getSessionFactory(){
-        if(sessionFactory == null){
-            try{
+
+    public static SessionFactory getSessionFactory() {
+        if (sessionFactory == null) {
+            try {
                 Configuration configuration = getConfiguration();
                 configuration.addAnnotatedClass(User.class);
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -50,17 +51,16 @@ public class Util {
         Configuration configuration = new Configuration();
         Properties properties = new Properties();
         properties.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-        properties.put(Environment.URL,"jdbc:mysql://localhost:3306/mydb");
-        properties.put(Environment.USER,"root");
-        properties.put(Environment.PASS,"root");
+        properties.put(Environment.URL, "jdbc:mysql://localhost:3306/mydb");
+        properties.put(Environment.USER, "root");
+        properties.put(Environment.PASS, "root");
         properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
 
-        properties.put(Environment.SHOW_SQL,"true");
+        properties.put(Environment.SHOW_SQL, "true");
         properties.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
         properties.put(Environment.HBM2DDL_AUTO, "");
 
         configuration.setProperties(properties);
         return configuration;
     }
-
 }
